@@ -1,6 +1,6 @@
-# Netflix Movies and TV Shows Data Analysis using SQL
+# Netflix Content Analysis using SQL
 
-![Netflix_Logo]()
+![Netflix_Logo](logo.png)
 
 ## Overview
 
@@ -14,7 +14,7 @@ The objective of this project is to analyze the Netflix dataset using SQL querie
 
 The data for this project is sourced from the Kaggle dataset:
 
--**Dataset Link:** [Movies Dataset]()
+-**Dataset Link:** [Movies Dataset](https://www.kaggle.com/datasets/shivamb/netflix-shows?resource=download)
 
 ## Schema 
 
@@ -40,10 +40,13 @@ SELECT COUNT(*) AS total_content FROM netflix;
 SELECT DISTINCT type FROM netflix;
 ```
 
+**Objective:**  Fetch all available data from the Netflix dataset. Determine the total number of movies and TV shows in the dataset. Identify the different types of content available on Netflix.
+
 ## Business Problems And Solutions 
 
 
 ### Q.1) Count the Number of Movies vs TV Shows
+
 
 ```sql
 SELECT 
@@ -52,8 +55,10 @@ SELECT
 from netflix
 group by type;
 ```
+**Objective:** Compare the distribution of movies and TV shows.
 
 ### Q.2) Find the Most Common Rating for Movies and TV Shows
+
 
 ```sql
 select type, rating from
@@ -68,7 +73,10 @@ group by type, rating
 where ranking = 1;
 ```
 
+**Objective:**  Identify the most frequently assigned content rating.
+
 ### Q.3) List all movies released in a specific year(e.g., 2020)
+
 
 ```sql
 SELECT * FROM netflix;
@@ -77,9 +85,9 @@ SELECT * FROM netflix
 WHERE type = 'Movie' AND release_year = 2020;
 ```
 
-### Q.4) Find the top 5 Countries with the most content on Netflix
+**Objective:** Retrieve all movies from a given release year. 
 
-SELECT * FROM netflix;
+### Q.4) Find the top 5 Countries with the most content on Netflix
 
 
 ```sql
@@ -91,6 +99,9 @@ group by new_country
 order by count(show_id) desc
 limit 5;
 ```
+
+**Objective:** Determine which countries contribute the most content to Netflix.
+
 
 -- 5. Identify the longest movie
 
@@ -111,6 +122,9 @@ from cte
 where Duration = (select max(Duration) from cte);
 ```
 
+**Objective:** Identify the Movies with the longest duration.
+
+
 ### Q.6) Find content added in the last 5 years 
 
 
@@ -118,6 +132,9 @@ where Duration = (select max(Duration) from cte);
 SELECT *, TO_DATE(date_added, 'Month DD, YYYY') FROM netflix 
 where TO_DATE(date_added, 'Month DD, YYYY') >= current_date - interval '5 years';
 ```
+
+**Objective:** Find the most recently added Movies and TV shows.
+
 
 ### Q.7) Find all the movies/TV shows by director 'Rajiv Chilaka'
 
@@ -127,6 +144,9 @@ SELECT * FROM netflix
 WHERE director ILIKE '%Rajiv Chilaka%';
 ```
 
+**Objective:** Extract all content directed by specific director (e.g., Rajiv Chilaka).
+
+
 ### Q.8) List all TV Shows with more than 5 seasons 
 
 
@@ -135,6 +155,9 @@ SELECT * FROM netflix
 WHERE type = 'TV Show' AND 
 SPLIT_PART(duration, ' ', 1)::numeric > 5; 
 ```
+
+**Objective:**  Find the longest-running TV shows on Netflix.
+
 
 ### Q.9) Count the number of content items in each genre 
 
@@ -146,6 +169,9 @@ SELECT
 FROM netflix 
 GROUP BY genre;
 ```
+
+**Objective:** Identify the most frequent genre in Netflix's library.
+
 
 ### Q.10) Find each year and the average numbers of content release by India on netflix,      return top 5 year with highest avg content release.
    
@@ -163,8 +189,10 @@ order by 3 desc
 limit 5;
 ```
 
+**Objective:** Analyze content addition trends over time.
 
-### Q.11) List all movies that are documentries 
+
+### Q.11) List all movies that are documentaries 
 
 
 ```sql
@@ -175,6 +203,9 @@ WHERE
 	type = 'Movie';
 ```
 
+**Objective:** Retrive all Movies with specific genre (e.g., Documentaries).
+
+
 ### Q.12) Find all content without a director 
 
 
@@ -182,6 +213,8 @@ WHERE
 SELECT * FROM netflix 
 WHERE director IS NULL;
 ```
+
+**Objective:** List content that does not have a director.
 
 
 ### Q.13) Find how many movies actor 'Salman Khan' appeared in last 10 years
@@ -197,6 +230,9 @@ WHERE
 	release_year >= EXTRACT(YEAR FROM CURRENT_DATE) - 10;
 ```
 
+**Objective:** Count the number of movies featuring specific actor in the last 10 years (e.g., Salman Khan).
+
+
 ### Q.14) Find the Top 10 Actors who have appeared in the highest number of movies produced in India.
 
 
@@ -210,6 +246,8 @@ GROUP BY 1
 ORDER BY 2 desc
 LIMIT 10;
 ```
+
+**Objective:** Identify actors featured in multiple Movies.
 
 
 ### Q.15) Categorize the content based on the presence of the keywords 'kill', and 'violence'  in the description field. Label content containing these keywords as 'Bad' and all othercontent as 'Good'. Count how many items fall into each category.
@@ -233,6 +271,9 @@ FROM cte
 GROUP BY category;
 ```
 
+**Objective:** Categorize content if it contains specified words in the description and count the number of items in each category.
+
+
 ## Insights
 
 - Netflix's content library is dominated by movies, suggesting a preference for shorter-form content over multi-season TV shows.
@@ -244,3 +285,8 @@ GROUP BY category;
 - The U.S., India, and other major film industries contribute the most to Netflix's content library.
 
 - Certain genres, such as drama and comedy, are more prevalent, reflecting audience preferences and market demand.
+
+
+## Conclusion
+
+This project provides a structured approach to analyzing Netflix content using SQL. The findings highlight content trends, production patterns, and audience preferences. The insights gained can help understand Netflix's content strategy and its adaptation to viewer demands.
